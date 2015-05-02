@@ -4,6 +4,7 @@
 *.la
 *.lo
 *.cgi
+.DS_Store
 .deps
 .libs
 build-arch-stamp

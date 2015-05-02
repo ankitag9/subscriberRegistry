@@ -197,8 +197,13 @@ char *processBuffer(char *buffer)
 	if (!imsiFound(imsi)) {
 		LOG(NOTICE) << "imsi unknown";
 		// imsi problem => 404 IMSI Not Found
-		osip_message_set_status_code (response, 404);
-		osip_message_set_reason_phrase (response, osip_strdup("IMSI Not Found"));
+        osip_message_set_status_code (response, 200);
+        osip_message_set_reason_phrase (response, osip_strdup("OK"));
+        LOG(INFO) << "success, imsi " << imsi << " registering for IP address " << remote_host;
+        gSubscriberRegistry.imsiSet(imsi,"ipaddr", remote_host, "port", remote_port);
+
+		//osip_message_set_status_code (response, 404);
+		//osip_message_set_reason_phrase (response, osip_strdup("IMSI Not Found"));
 	} else if (gConfig.defines("SubscriberRegistry.IgnoreAuthentication")) {
                 osip_message_set_status_code (response, 200);
                 osip_message_set_reason_phrase (response, osip_strdup("OK"));
